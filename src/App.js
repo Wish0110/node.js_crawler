@@ -1,18 +1,8 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const fs = require("fs");
+const crawledDataRouter = require('./routes'); // Adjust the path if needed
 
-app.get("/data", (req, res) => {
-    fs.readFile("data.json", "utf8", (err, data) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send("Error reading JSON file");
-        } else {
-            res.json(JSON.parse(data));
-        }
-    });
-});
+// ... other middleware and configuration
 
-app.listen(3001, () => {
-    console.log("Express server listening on port 3001");
-});
+app.use('/api', crawledDataRouter); // Mount the routes under a specific path
+

@@ -10,7 +10,7 @@ function App() {
     setIsLoading(true); // Set loading state to true
     setError(null); // Clear any previous errors
 
-    axios.get('http://localhost:6000/crawled_data')
+    axios.get('http://localhost:3001/crawled_data')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

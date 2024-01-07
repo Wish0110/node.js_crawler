@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import Axios
 
 function App() {
   const [books, setBooks] = useState([]); // State to store fetched books
@@ -9,7 +10,7 @@ function App() {
     setIsLoading(true); // Set loading state to true
     setError(null); // Clear any previous errors
 
-    fetch('http://localhost:6000/crawled_data')
+    axios.get('http://localhost:6000/crawled_data')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

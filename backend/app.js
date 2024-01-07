@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 
+// Endpoint to serve crawled data
 app.get('/crawled_data', async (req, res) => {
   try {
     const data = await fs.promises.readFile('crawled_data.json', 'utf-8');
@@ -12,7 +13,7 @@ app.get('/crawled_data', async (req, res) => {
   }
 });
 
-// Start the server (replace 3000 with your desired port)
+// Start the server
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });

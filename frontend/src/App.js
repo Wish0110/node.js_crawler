@@ -8,7 +8,9 @@ function App() {
       .then(response => response.json())
       .then(data => setBooks(data))
       .catch(error => console.error('Error fetching data:', error));
+      
   }, []);
+
 
   return (
     <ul id="books-list">

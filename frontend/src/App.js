@@ -4,7 +4,7 @@ function App() {
   const [books, setBooks] = useState([]); // State to store fetched books
 
   useEffect(() => {
-    fetch('/crawled_data')
+    fetch('http://localhost:6000/crawled_data')
       .then(response => response.json())
       .then(data => setBooks(data))
       .catch(error => console.error('Error fetching data:', error));

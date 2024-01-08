@@ -3,29 +3,34 @@ import axios from 'axios'; // Import Axios
 
 function App() {
   const [books, setBooks] = useState([]); // State to store fetched books
-  const [isLoading, setIsLoading] = useState(''); // State to track loading state
-  const [error, setError] = useState(''); // State to store any errors
+  const [isLoading, setIsLoading] = useState(true); // State to track loading state
+  const [error, setError] = useState(null); // State to store any errors
 
   useEffect(() => {
     setIsLoading(true); // Set loading state to true
     setError(); // Clear any previous errors
 
-    axios.get('http://localhost:3001/crawled_data')
-      .then(response => {
+    const fetchBooks = async () => {
+      setIsLoading(true); // Set loading state to true
+      setError(null); // Clear any previous errors
+    
+      try {
+        const response = await axios.get('http://localhost:3001/crawled_data');
+    
         if (!response.ok) {
-          throw new Error('response was not ok');
+          throw new Error('Network response was not ok');
         }
-        return response.json();
-      })
-      .then(data => {
+    
+        const data = await response.json();
         setBooks(data);
-      })
-      .catch(error => {
+      } catch (error) {
+        console.error('Error fetching books:', error);
         setError(error);
-      })
-      .finally(() => {
-        setIsLoading(); // Set loading state to false
-      });
+      } finally {
+        setIsLoading(false); // Set loading state to false
+      }
+    };
+    
   }, []);
 
   return (

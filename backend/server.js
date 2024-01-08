@@ -11,7 +11,7 @@ app.get('/crawled_data', async (req, res) => {
     res.json(JSON.parse(data));
   } catch (error) {
     console.error('Error fetching data:', error);
-    res.status(500).json('Error fetching data');
+    res.status(500).send('Error fetching data');
   }
 });
 

@@ -1,45 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 
 function App() {
-  const [books, setBooks] = useState([]); // State to store fetched books
-  const [isLoading, setIsLoading] = useState(''); // State to track loading state
-  const [error, setError] = useState(''); // State to store any errors
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true); // Set loading state to true
-    setError(); // Clear any previous errors
-
-    axios.get('http://localhost:3001/crawled_data')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setBooks(data);
-      })
-      .catch(error => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get('http://localhost:3001/crawled_data');
+        setData(response.data);
+      } catch (error) {
         setError(error);
-      })
-      .finally(() => {
-        setIsLoading(); // Set loading state to false
-      });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
     <div>
-      {isLoading && <p>Loading books...</p>}
+      {isLoading && <p>Loading data...</p>}
       {error && <p>Error: {error.message}</p>}
-      {books.length > 0 && (
-        <ul id="books-list">
-          {books.map(book => (
-            <li key={book.id}>{book.title} - {book.price}</li>
+      {data.length > 0 && (
+        <ul>
+          {data.map((item) => (
+            <li key={item.title}>
+              <h2>{item.title}</h2>
+              <p>Price: {item.price}</p>
+              <p>Availability: {item.availability}</p>
+            </li>
           ))}
         </ul>
       )}
-      {!isLoading && !error && books.length === 0 && <p>No books found.</p>}
     </div>
   );
 }

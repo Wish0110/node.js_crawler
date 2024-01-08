@@ -3,12 +3,12 @@ import axios from 'axios'; // Import Axios
 
 function App() {
   const [books, setBooks] = useState([]); // State to store fetched books
-  const [isLoading, setIsLoading] = useState(false); // State to track loading state
-  const [error, setError] = useState(null); // State to store any errors
+  const [isLoading, setIsLoading] = useState(''); // State to track loading state
+  const [error, setError] = useState(''); // State to store any errors
 
   useEffect(() => {
     setIsLoading(true); // Set loading state to true
-    setError(null); // Clear any previous errors
+    setError(); // Clear any previous errors
 
     axios.get('http://localhost:3001/crawled_data')
       .then(response => {
@@ -24,7 +24,7 @@ function App() {
         setError(error);
       })
       .finally(() => {
-        setIsLoading(false); // Set loading state to false
+        setIsLoading(); // Set loading state to false
       });
   }, []);
 

@@ -1,7 +1,9 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
+const cors = require('cors');
 
+app.use(cors());
 // Endpoint to serve crawled data
 app.get('/crawled_data', async (req, res) => {
   try {
